@@ -1,9 +1,12 @@
 import feedparser
+import pandas as pd
 
 def fetch_rss_feed(url):
 
-    feed = feedparser.parse(url)
-    print(feed.entries)
+    raw_feed = feedparser.parse(url)
+    data = pd.DataFrame(raw_feed['entries'])
+    print(f'{data.keys()}\n {data}')
+
 
 
 # Has this keys: 'bozo', 'entries', 'feed', 'headers', 'etag', 'href', 'status', 'encoding', 'version', 'namespaces'
