@@ -1,11 +1,19 @@
 import feedparser
 import pandas as pd
+import requests
+import os
+
+url = os.environ.get("URL")
+model_name = os.environ.get("MODEL")
 
 def fetch_rss_feed(url):
 
     raw_feed = feedparser.parse(url)
     data = pd.DataFrame(raw_feed['entries'])
     print(f'{data.keys()}\n {data}')
+
+def ask_ollama(question):
+    pass
 
 
 
