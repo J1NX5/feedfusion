@@ -2,7 +2,7 @@ import feedparser
 import pandas as pd
 # import requests
 import json
-# from scraper import FeedScraper
+from scraper import FeedScraper
 
 
 class FeedReader:
@@ -28,8 +28,9 @@ class FeedReader:
     # scraper not finish
     def get_feed_text(self, url):
         print(url)
-        # fso = FeedScraper(url)
+        fso = FeedScraper(url)
         # text = fso.scrape()
+        print(fso.scrape())
         # return text
 
 if __name__ == '__main__':
