@@ -22,9 +22,9 @@ logging.basicConfig(
     ]
 )
 
-class FinanceScraper:
+class FeedScraper:
 
-    def __init__(self):
+    def __init__(self, url):
 
         # date_today for cvs name
         self.__date_today = datetime.today().strftime('%Y-%m-%d')
@@ -48,8 +48,7 @@ class FinanceScraper:
         self.__chrome_options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0')
         self.__chrome_options.page_load_strategy = 'eager'
         self.__driver = webdriver.Chrome(service=self.__service, options=self.__chrome_options)
-        self.__base_url = "https://finance.yahoo.com/calendar/earnings"
-        self.__fin_base_url = "https://finance.yahoo.com"
+        self.__base_url = url
 
     def wait(func):
         def wrapper(*args, **kwargs):

@@ -1,8 +1,11 @@
 import feedparser
 import pandas as pd
-import requests
+# import requests
+import json
+# from scraper import FeedScraper
 
-class Feedreader:
+
+class FeedReader:
 
     def __init__(self):
         self.__rss_url = "https://www.wallstreet-online.de/rss/nachrichten-aktien-indizes.xml"
@@ -16,9 +19,19 @@ class Feedreader:
             'link',
             'updated'
         ]]
-        print(f'{fetch_data.keys()}\n {fetch_data}')
+        # print(f'{fetch_data.keys()}\n {fetch_data}')
+        self.get_feed_text(fetch_data.link[0])
 
+
+        # build json structure and by the field text call get_feed_text func
+
+    # scraper not finish
+    def get_feed_text(self, url):
+        print(url)
+        # fso = FeedScraper(url)
+        # text = fso.scrape()
+        # return text
 
 if __name__ == '__main__':
-    fr = Feedreader()
+    fr = FeedReader()
     fr.fetch_rss_feed()
