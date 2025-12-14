@@ -1,0 +1,32 @@
+from apscheduler.schedulers.background import BackgroundScheduler
+from lib.feedreader import Feedreader
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    handlers=[
+        logging.FileHandler('log.txt'), 
+        logging.StreamHandler()
+    ]
+)
+
+class Jobcenter:
+
+    def __init__(self):
+        self.__scheduler = BackgroundScheduler()
+        # self.scheduler.add_job(self._start_scraper, 'interval', minutes=1)
+        logging.info("Start scraping once for the begin")
+        self._start_scraper()
+        self.__scheduler.add_job(self._start_scraper, 'interval', hours=1)
+
+    def start(self) -> None:
+        self.__scheduler.start()
+        return logging.info("Jobcenter hat geöffnet")
+        
+
+    def _start_scraper(self) -> None:
+        pass
+
+    
