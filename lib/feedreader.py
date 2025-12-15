@@ -1,6 +1,7 @@
 import feedparser
 import pandas as pd
 import json
+# from db import DBManager
 from lib.db import DBManager
 import logging
 
@@ -27,13 +28,13 @@ class FeedReader:
         fetch_data = pre_data[[
             'id',
             'title',
-            'summary',
+            'title_detail',
             'link',
             'published',
             'author'            
         ]]
         for f in fetch_data.itertuples(index=False):
-            self.__dbm.insert_feed(f.id, f.title, f.summary, f.link, f.published, f.author)
+            self.__dbm.insert_feed(f.id, f.title, f.title_detail.value, f.link, f.published, f.author)
 
 if __name__ == '__main__':
     fr = FeedReader('https://www.coindesk.com/arc/outboundfeeds/rss/')
