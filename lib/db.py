@@ -3,8 +3,8 @@ import sqlite3
 class DBManager:
     def __init__(self):
         self.__db_path: str = "data.db"
-        self.__conn = self._create_connection(self.db_path)
-        self._create_table_for_fmp()
+        self.__conn = self._create_connection(self.__db_path)
+        self._create_table()
 
     def _create_connection(self, db_file):
         connection = sqlite3.connect(db_file)
@@ -21,7 +21,7 @@ class DBManager:
                 summary TEXT NOT NULL,
                 link TEXT NOT NULL,
                 published TEXT NOT NULL,
-                author TEXT NOT NULL,
+                author TEXT NOT NULL
             ); 
         ''')
         cursor.execute('''
@@ -39,7 +39,7 @@ class DBManager:
         published: str,
         author: str
         ):
-        cursor = self.conn.cursor()
+        cursor = self.__conn.cursor()
         cursor.execute('''
             INSERT OR IGNORE INTO rss_table(
                 rss_id,
@@ -49,7 +49,7 @@ class DBManager:
                 published,
                 author
             )
-            VALUES (?, ?, ?, ?, ?, ?, );
+            VALUES (?, ?, ?, ?, ?, ?);
             ''', (  
                     rss_id,
                     title,

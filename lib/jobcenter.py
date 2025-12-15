@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from lib.feedreader import Feedreader
+from lib.feedreader import FeedReader
 import logging
 
 logging.basicConfig(
@@ -17,16 +17,18 @@ class Jobcenter:
     def __init__(self):
         self.__scheduler = BackgroundScheduler()
         # self.scheduler.add_job(self._start_scraper, 'interval', minutes=1)
-        logging.info("Start scraping once for the begin")
-        self._start_scraper()
-        self.__scheduler.add_job(self._start_scraper, 'interval', hours=1)
+        logging.info("Get feeds at programm start")
+        self._get_feeds()
+        self.__scheduler.add_job(self._get_feeds, 'interval', minutes=10)
 
     def start(self) -> None:
         self.__scheduler.start()
         return logging.info("Jobcenter hat geöffnet")
         
 
-    def _start_scraper(self) -> None:
-        pass
+    def _get_feeds(self) -> None:
+        logging.info('Getting feeds')
+        fro = FeedReader('https://www.coindesk.com/arc/outboundfeeds/rss/')
+        fro.fetch_rss_feed()
 
     
