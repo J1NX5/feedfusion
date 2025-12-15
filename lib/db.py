@@ -2,7 +2,7 @@ import sqlite3
 
 class DBManager:
     def __init__(self):
-        self.__db_path: str = "data.db"
+        self.__db_path: str = "data/data.db"
         self.__conn = self._create_connection(self.__db_path)
         self._create_table()
 
