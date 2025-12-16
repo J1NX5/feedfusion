@@ -30,7 +30,6 @@ class DBManager:
         ''')
         return self.__conn.commit()
 
-    # A func which get the earning report in delay of 1 day
     def insert_feed(
         self, 
         rss_id: str, 
@@ -64,3 +63,14 @@ class DBManager:
                 )
         ) 
         return self.__conn.commit()
+
+    def check_entry_exist(
+        self,
+        rss_id: str,
+        ):
+        cursor = self.__conn.cursor()
+        cursor.execute(
+        "SELECT 1 FROM rss_table WHERE rss_id = ? LIMIT 1;",
+        (rss_id,)
+        )
+        return cursor.fetchone()

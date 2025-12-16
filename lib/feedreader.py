@@ -38,6 +38,10 @@ class FeedReader:
 
     def fetch_rss_feed(self):
         count = 0
+
+        count_entrys = 0
+        count_exists = 0
+        count_inserts = 0
         for q in self.__config:
             count += 1
             print(f'Runde: {count}')
@@ -57,10 +61,17 @@ class FeedReader:
                 'published',
                 'author'         
             ]]
-            # print(fetch_data.title_detail.values)
 
             for f in fetch_data.itertuples(index=False):
-                self.__dbm.insert_feed(f.id, f.title, f.link, f.published, f.author, q['name'], 1)
+                count_entrys += 1
+                resp = self.__dbm.check_entry_exist(f.id)
+                if resp is not None:
+                    count_exists += 1
+                else:
+                    self.__dbm.insert_feed(f.id, f.title, f.link, f.published, f.author, q['name'], 1)
+                    count_inserts += 1
+        logging.info(f'Entrys: {count_entrys}, exists: {count_exists}, inserts: {count_inserts}')
+            
 
 if __name__ == '__main__':
     fr = FeedReader()
