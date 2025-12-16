@@ -18,6 +18,7 @@ class DBManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 rss_id TEXT NOT NULL,
                 title TEXT NOT NULL,
+                html TEXT DEFAULT NULL,
                 link TEXT NOT NULL,
                 published TEXT NOT NULL,
                 author TEXT NOT NULL,
@@ -74,3 +75,16 @@ class DBManager:
         (rss_id,)
         )
         return cursor.fetchone()
+
+    def get_active_urls_without_text(self):
+        cursor = self.__conn.cursor()
+        cursor.execute("SELECT * FROM rss_table WHERE html is NULL AND active = 1 LIMIT 5;")
+        return cursor.fetchall()
+
+    def update_html_field_by_url(self, html_text, feed_url):
+        cursor = self.__conn.cursor()
+        cursor.execute(
+            "UPDATE rss_table SET html = ?, active = 0  WHERE link = ?;",
+            (html_text, feed_url)
+        )
+        return self.__conn.commit()

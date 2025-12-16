@@ -1,12 +1,11 @@
 import feedparser
 import pandas as pd
 import json
-# from db import DBManager
-from lib.db import DBManager
+# for lokal testing -> uncomment next line; comment out -> from lib.db import DBManager
+from lib.database import DBManager
+# from lib.db import DBManager
 import logging
 import yaml
-
-
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,7 +16,6 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-
 
 class FeedReader:
 
@@ -35,7 +33,6 @@ class FeedReader:
 
     # def test_yaml(self):
     #     print(self.__config)
-
 
     def fetch_rss_feed(self):
         try:
@@ -74,8 +71,7 @@ class FeedReader:
                         count_data[q['name']]['count_inserts'] += 1
         except Exception as e:
             logging.info(f'Error {e}')
-        return logging.info(count_data)
-            
+        return logging.info(count_data)       
 
 if __name__ == '__main__':
     fr = FeedReader()
