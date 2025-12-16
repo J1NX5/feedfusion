@@ -1,0 +1,5 @@
+feeds:
+  - name: coindesk
+    url: https://www.coindesk.com/arc/outboundfeeds/rss/
+  - name: cointelegraph
+    url: https://cointelegraph.com/rss
