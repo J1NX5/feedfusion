@@ -21,7 +21,9 @@ class DBManager:
                 title_detail TEXT NOT NULL,
                 link TEXT NOT NULL,
                 published TEXT NOT NULL,
-                author TEXT NOT NULL
+                author TEXT NOT NULL,
+                source TEXT NOT NULL,
+                active INTEGER NOT NULL
             ); 
         ''')
         cursor.execute('''
@@ -37,7 +39,9 @@ class DBManager:
         title_detail: str,
         link: str,
         published: str,
-        author: str
+        author: str,
+        source: str,
+        active: int
         ):
         cursor = self.__conn.cursor()
         cursor.execute('''
@@ -47,16 +51,20 @@ class DBManager:
                 title_detail,
                 link,
                 published,
-                author
+                author,
+                source,
+                active
             )
-            VALUES (?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
             ''', (  
                     rss_id,
                     title,
                     title_detail,
                     link,
                     published,
-                    author 
+                    author,
+                    source,
+                    active
                 )
         ) 
         return self.__conn.commit()

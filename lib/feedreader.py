@@ -49,20 +49,19 @@ class FeedReader:
             '''
             raw_feed = feedparser.parse(q['url'])
             pre_data = pd.DataFrame(raw_feed.entries)
-            print(pre_data.keys())
+            # print(pre_data.keys())
+            fetch_data = pre_data[[
+                'id',
+                'title',
+                'title_detail',
+                'link',
+                'published',
+                'author'         
+            ]]
+            print(fetch_data.title_detail.values)
 
-        # fetch_data = pre_data[[
-        #     'id',
-        #     'title',
-        #     'title_detail',
-        #     'link',
-        #     'published',
-        #     'author'           
-        # ]]
-        # print(fetch_data.title_detail.values)
-
-        # for f in fetch_data.itertuples(index=False):
-        #     self.__dbm.insert_feed(f.id, f.title, f.title_detail.value, f.link, f.published, f.author)
+            for f in fetch_data.itertuples(index=False):
+                self.__dbm.insert_feed(f.id, f.title, f.title_detail.value, f.link, f.published, f.author, q['name'], 1)
 
 if __name__ == '__main__':
     fr = FeedReader()
