@@ -1,9 +1,9 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from lib.feedreader import FeedReader
 from lib.database import DBManager
-from lib.scraper import FeedScraper
 import logging
 import time
+from newspaper import Article
 
 logging.basicConfig(
     level=logging.INFO,
@@ -24,9 +24,9 @@ class Jobcenter:
         self._get_feeds()
         logging.info("Wait 5 sec.")
         time.sleep(5)
-        self._scrape_feed_html()
+        self._scrape_feed_text()
         self.__scheduler.add_job(self._get_feeds, 'interval', minutes=10)
-        self.__scheduler.add_job(self._scrape_feed_html, 'interval', minutes=5)
+        self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=5)
 
     def start(self) -> None:
         self.__scheduler.start()
@@ -38,7 +38,7 @@ class Jobcenter:
         fro = FeedReader()
         fro.fetch_rss_feed()
 
-    def _scrape_feed_html(self):
+    def _scrape_feed_text(self):
         dmo = DBManager()
 
         # Get 10 of datasets without text and active
@@ -48,13 +48,16 @@ class Jobcenter:
         for d in datasets:
             # 4 is the field with the url -> give it to the scraper
             # print(d[4])
-            fso = FeedScraper(d[4])
+            # fso = FeedScraper(d[4])
             try:
-                html_text = fso.scrape()
-                dmo.update_html_field_by_url(html_text, d[4])
+                # html_text = fso.scrape()
+                feed_article = Article(d[4])
+                feed_article.download()
+                feed_article.parse()
+                dmo.update_feed_text_by_url(feed_article.text, d[4])
             except Exception as e:
                 logging.warning(f'Error: {e}')
-        return logging.info("Success running: _scrape_feed_html()")
+        return logging.info("Success running: _scrape_feed_text()")
             
 
 
