@@ -27,7 +27,7 @@ class Jobcenter:
         
 
     def _get_feeds(self) -> None:
-        logging.info('Start to getting feeds')
+        logging.info('Run _get_feeds() from jobcenter')
         fro = FeedReader()
         fro.fetch_rss_feed()
 

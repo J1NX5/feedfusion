@@ -26,7 +26,7 @@ class DBManager:
             ); 
         ''')
         cursor.execute('''
-            CREATE UNIQUE INDEX IF NOT EXISTS unique_rss_id ON rss_table(rss_id);
+            CREATE UNIQUE INDEX IF NOT EXISTS unique_rss_id_and_source ON rss_table(rss_id, source);
         ''')
         return self.__conn.commit()
 
