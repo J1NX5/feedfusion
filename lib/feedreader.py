@@ -1,8 +1,8 @@
 import feedparser
 import pandas as pd
 import json
-from db import DBManager
-# from lib.db import DBManager
+# from db import DBManager
+from lib.db import DBManager
 import logging
 import yaml
 
