@@ -24,6 +24,7 @@ class FeedReader:
     def __init__(self):
         self.__dbm = DBManager()
         self.__config = self._read_sources()
+        logging.info('Config are loaded')
 
     def _read_sources(self):
         with open("sources.yaml", "r", encoding="utf-8") as f:

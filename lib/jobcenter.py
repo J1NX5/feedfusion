@@ -27,8 +27,8 @@ class Jobcenter:
         
 
     def _get_feeds(self) -> None:
-        logging.info('Getting feeds')
-        fro = FeedReader('https://www.coindesk.com/arc/outboundfeeds/rss/')
+        logging.info('Start to getting feeds')
+        fro = FeedReader()
         fro.fetch_rss_feed()
 
     
