@@ -18,7 +18,6 @@ class DBManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 rss_id TEXT NOT NULL,
                 title TEXT NOT NULL,
-                title_detail TEXT NOT NULL,
                 link TEXT NOT NULL,
                 published TEXT NOT NULL,
                 author TEXT NOT NULL,
@@ -36,7 +35,6 @@ class DBManager:
         self, 
         rss_id: str, 
         title: str,
-        title_detail: str,
         link: str,
         published: str,
         author: str,
@@ -48,18 +46,16 @@ class DBManager:
             INSERT OR IGNORE INTO rss_table(
                 rss_id,
                 title,
-                title_detail,
                 link,
                 published,
                 author,
                 source,
                 active
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?);
             ''', (  
                     rss_id,
                     title,
-                    title_detail,
                     link,
                     published,
                     author,
