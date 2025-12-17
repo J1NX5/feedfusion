@@ -23,6 +23,7 @@ class DBManager:
                 published TEXT NOT NULL,
                 author TEXT NOT NULL,
                 source TEXT NOT NULL,
+                dom TEXT DEFAULT NULL,
                 active INTEGER NOT NULL
             ); 
         ''')
@@ -81,10 +82,23 @@ class DBManager:
         cursor.execute("SELECT * FROM rss_table WHERE feed_text is NULL AND active = 1 LIMIT 5;")
         return cursor.fetchall()
 
+    def get_urls_without_dom(self):
+        cursor = self.__conn.cursor()
+        cursor.execute("SELECT * FROM rss_table WHERE dom is NULL LIMIT 5;")
+        return cursor.fetchall()
+
     def update_feed_text_by_url(self, feed_text, feed_url):
         cursor = self.__conn.cursor()
         cursor.execute(
             "UPDATE rss_table SET feed_text = ?, active = 0  WHERE link = ?;",
             (feed_text, feed_url)
+        )
+        return self.__conn.commit()
+
+    def update_dom_by_url(self, dom_url, feed_url):
+        cursor = self.__conn.cursor()
+        cursor.execute(
+            "UPDATE rss_table SET dom = ?, active = 0  WHERE link = ?;",
+            (dom_url, feed_url)
         )
         return self.__conn.commit()

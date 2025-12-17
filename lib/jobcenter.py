@@ -1,9 +1,11 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from lib.feedreader import FeedReader
 from lib.database import DBManager
+from lib.scraper import FeedScraper
 import logging
 import time
 from newspaper import Article
+import os
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,6 +29,7 @@ class Jobcenter:
         self._scrape_feed_text()
         self.__scheduler.add_job(self._get_feeds, 'interval', minutes=10)
         self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=5)
+        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=15)
 
     def start(self) -> None:
         self.__scheduler.start()
@@ -58,7 +61,23 @@ class Jobcenter:
             except Exception as e:
                 logging.warning(f'Error: {e}')
         return logging.info("Success running: _scrape_feed_text()")
-            
 
+    def _scrape_dom_and_save_to_file(self):
+        dmo = DBManager()
+        fetch_data = dmo.get_urls_without_dom()
+        for fd in fetch_data:
+            fso = FeedScraper(fd[4])
+            dom_data = fso.scrape()
+            directory = "data/dom"
+            file_name = str(fd[0])
+            file_path = os.path.join(directory, f'{file_name}.txt')
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(dom_data)
+            dmo.update_dom_by_url(str(directory+file_name+".txt"),fd[4])
+
+
+if __name__ == "__main__":
+    jc = Jobcenter()
+    jc._scrape_dom_and_save_to_file()
 
     
