@@ -9,3 +9,4 @@ services:
     stdin_open: true
     volumes:
       - ~/feedfusion:/app/data
+      - ~/feedfusion/dom:/app/data/dom
