@@ -17,13 +17,15 @@ class DBManager:
             CREATE TABLE IF NOT EXISTS rss_table (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 rss_id TEXT NOT NULL,
+                source TEXT NOT NULL,
                 title TEXT NOT NULL,
                 feed_text TEXT DEFAULT NULL,
+                tags TEXT DEFAULT NULL,
                 link TEXT NOT NULL,
-                published TEXT NOT NULL,
-                author TEXT NOT NULL,
-                source TEXT NOT NULL,
+                published TEXT DEFAULT NULL,
+                author TEXT DEFAULT NULL,
                 dom TEXT DEFAULT NULL,
+                calldate TEXT DEFAULT NULL,
                 active INTEGER NOT NULL
             ); 
         ''')
@@ -34,33 +36,36 @@ class DBManager:
 
     def insert_feed(
         self, 
-        rss_id: str, 
+        rss_id: str,
+        source: str,
         title: str,
+        tags: str,
         link: str,
         published: str,
         author: str,
-        source: str,
         active: int
         ):
         cursor = self.__conn.cursor()
         cursor.execute('''
             INSERT OR IGNORE INTO rss_table(
                 rss_id,
+                source,
                 title,
+                tags,
                 link,
                 published,
                 author,
-                source,
                 active
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
             ''', (  
                     rss_id,
+                    source,
                     title,
+                    tags,
                     link,
                     published,
                     author,
-                    source,
                     active
                 )
         ) 
@@ -79,12 +84,12 @@ class DBManager:
 
     def get_active_urls_without_text(self):
         cursor = self.__conn.cursor()
-        cursor.execute("SELECT * FROM rss_table WHERE feed_text is NULL AND active = 1 LIMIT 5;")
+        cursor.execute("SELECT * FROM rss_table WHERE feed_text is NULL AND active = 1 LIMIT 10;")
         return cursor.fetchall()
 
     def get_urls_without_dom(self):
         cursor = self.__conn.cursor()
-        cursor.execute("SELECT * FROM rss_table WHERE dom is NULL LIMIT 5;")
+        cursor.execute("SELECT * FROM rss_table WHERE dom is NULL LIMIT 10;")
         return cursor.fetchall()
 
     def update_feed_text_by_url(self, feed_text, feed_url):

@@ -24,12 +24,9 @@ class Jobcenter:
         # self.scheduler.add_job(self._start_scraper, 'interval', minutes=1)
         logging.info("Get feeds at programm start")
         self._get_feeds()
-        logging.info("Wait 5 sec.")
-        time.sleep(5)
-        self._scrape_feed_text()
         self.__scheduler.add_job(self._get_feeds, 'interval', minutes=10)
-        self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=5)
-        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=15)
+        self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=15)
+        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=20)
 
     def start(self) -> None:
         self.__scheduler.start()

@@ -3,3 +3,22 @@ feeds:
     url: https://www.coindesk.com/arc/outboundfeeds/rss/
   - name: cointelegraph
     url: https://cointelegraph.com/rss
+  - name: CNBC - Earnings
+    url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839135
+  - name: CNBC - Finance
+    url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664
+  - name: Bloombarg
+    url: https://feeds.bloomberg.com/markets/news.rss
+  - name: Reuters - Fiancials
+    url: https://ir.thomsonreuters.com/rss/news-releases.xml?items=15
+  - name: Reuters - Events
+    url:  https://ir.thomsonreuters.com/rss/events.xml?items=15
+  - name: Reuters - SEC Filings
+    url: https://ir.thomsonreuters.com/rss/sec-filings.xml?items=15
+  - name: FED - Press Releases
+    url: https://www.federalreserve.gov/feeds/press_all.xml
+  - name: ECB - Forex USD/EUR
+    url: https://www.ecb.europa.eu/rss/fxref-usd.html
+  - name: ECB - Forex CNY/EUR
+    url: https://www.ecb.europa.eu/rss/fxref-usd.html
+
