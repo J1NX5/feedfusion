@@ -94,7 +94,7 @@ class FeedReader:
             tags_string = None
         return tags_string
     
-    def _cast_datestring_to_unixtime(date_string: str) -> int:
+    def _cast_datestring_to_unixtime(self, date_string: str) -> int:
         dt = datetime.strptime(date_string, "%a, %d %b %Y %H:%M:%S %z")
         timestamp = int(dt.timestamp())
         return timestamp
