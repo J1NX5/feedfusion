@@ -63,7 +63,7 @@ class Jobcenter:
         dmo = DBManager()
         fetch_data = dmo.get_urls_without_dom()
         for fd in fetch_data:
-            fso = FeedScraper(fd[4])
+            fso = FeedScraper(fd[6])
             dom_data = fso.scrape()
             directory = "data/dom"
             file_name = str(fd[0])

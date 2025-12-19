@@ -19,6 +19,4 @@ feeds:
     url: https://www.federalreserve.gov/feeds/press_all.xml
   - name: ECB - Forex USD/EUR
     url: https://www.ecb.europa.eu/rss/fxref-usd.html
-  - name: ECB - Forex CNY/EUR
-    url: https://www.ecb.europa.eu/rss/fxref-usd.html
 

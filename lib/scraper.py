@@ -8,7 +8,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 import re
 import pandas as pd
-from datetime import datetime
 import json
 import logging
 
@@ -28,7 +27,6 @@ class FeedScraper:
         self.__base_url = url
 
         # date_today for cvs name
-        self.__date_today = datetime.today().strftime('%Y-%m-%d')
 
         # url of chromedriver for docker build
         self.__service = Service('/usr/local/bin/chromedriver')
@@ -50,16 +48,15 @@ class FeedScraper:
         self.__chrome_options.page_load_strategy = 'eager'
         self.__driver = webdriver.Chrome(service=self.__service, options=self.__chrome_options)
 
-    def wait(func):
-        def wrapper(*args, **kwargs):
-            logging.info("decorator @wait is called")
-            time.sleep(2)
-            return func(*args, **kwargs)
-        return wrapper
-
+    # def wait(func):
+    #     def wrapper(*args, **kwargs):
+    #         logging.info("decorator @wait is called")
+    #         time.sleep(2)
+    #         return func(*args, **kwargs)
+    #     return wrapper
 
     # The decorator is called befor the function is called
-    @wait
+    # @wait
     def scrape(self):
         logging.info("Start function")
         self.__driver.get(self.__base_url)

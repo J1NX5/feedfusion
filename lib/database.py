@@ -1,7 +1,9 @@
 import sqlite3
+from datetime import datetime
 
 class DBManager:
     def __init__(self):
+        self.__date_today = datetime.today().strftime('%Y-%m-%d')
         self.__db_path: str = "data/data.db"
         self.__conn = self._create_connection(self.__db_path)
         self._create_table()
@@ -25,7 +27,7 @@ class DBManager:
                 published TEXT DEFAULT NULL,
                 author TEXT DEFAULT NULL,
                 dom TEXT DEFAULT NULL,
-                calldate TEXT DEFAULT NULL,
+                created_at TEXT DEFAULT NULL,
                 active INTEGER NOT NULL
             ); 
         ''')
@@ -55,9 +57,10 @@ class DBManager:
                 link,
                 published,
                 author,
+                created_at,
                 active
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
             ''', (  
                     rss_id,
                     source,
@@ -66,6 +69,7 @@ class DBManager:
                     link,
                     published,
                     author,
+                    self.__date_today(),
                     active
                 )
         ) 

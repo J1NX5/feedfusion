@@ -77,7 +77,7 @@ class FeedReader:
                     else:
                         # if q['name'] == 'CNBC - Earnings':
                         #     print(f.id, q['name'], f.title, tag_string, f.link, f.published, f.author)
-                        self.__dbm.insert_feed(f.id, q['name'], f.title, tag_string, f.link, published, author,  1)
+                        self.__dbm.insert_feed(f.id, q['name'], f.title, tag_string, f.link, published, author, 1)
                         count_data[q['name']]['count_inserts'] += 1
         except Exception as e:
             logging.info(f'Error {e}')
