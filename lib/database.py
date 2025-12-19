@@ -3,7 +3,7 @@ from datetime import datetime
 
 class DBManager:
     def __init__(self):
-        self.__date_today = datetime.today().strftime('%Y-%m-%d')
+        self.__date_today = int(datetime.now().timestamp())
         self.__db_path: str = "data/data.db"
         self.__conn = self._create_connection(self.__db_path)
         self._create_table()
@@ -24,10 +24,10 @@ class DBManager:
                 feed_text TEXT DEFAULT NULL,
                 tags TEXT DEFAULT NULL,
                 link TEXT NOT NULL,
-                published TEXT DEFAULT NULL,
+                published INTEGER DEFAULT NULL,
                 author TEXT DEFAULT NULL,
                 dom TEXT DEFAULT NULL,
-                created_at TEXT DEFAULT NULL,
+                created_at INTEGER DEFAULT NULL,
                 active INTEGER NOT NULL
             ); 
         ''')

@@ -7,6 +7,10 @@ services:
     restart: unless-stopped
     tty: true
     stdin_open: true
+    environment:
+      GETFEEDS: 30
+      SCRAPETEXT: 15
+      SCRAPEDOM: 20
     volumes:
       - ~/ff_data:/app/data
       - ~/ff_data/dom:/app/data/dom

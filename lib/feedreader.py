@@ -6,6 +6,7 @@ from lib.database import DBManager
 # from database import DBManager
 import logging
 import yaml
+from datetime import datetime
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,6 +53,7 @@ class FeedReader:
                 '''
                 raw_feed = feedparser.parse(q['url'])
                 pre_data = pd.DataFrame(raw_feed.entries)
+                print(pre_data)
                 desired_cols = ['id', 'title', 'tags', 'link', 'published', 'author']
                 existing_cols = [c for c in desired_cols if c in pre_data.keys()]
                 fetch_data = pre_data[existing_cols]
@@ -69,7 +71,7 @@ class FeedReader:
                         author = None
 
                     if hasattr(f, "published"):
-                        published = f.published
+                        published = self._cast_datestring_to_unixtime(f.published)
                     else:
                         published = None
                     if resp is not None:
@@ -92,6 +94,11 @@ class FeedReader:
         else:
             tags_string = None
         return tags_string
+    
+    def _cast_datestring_to_unixtime(date_string: str) -> int:
+        dt = datetime.strptime(date_string, "%a, %d %b %Y %H:%M:%S %z")
+        timestamp = int(dt.timestamp())
+        return timestamp
 
 if __name__ == '__main__':
     fr = FeedReader()
