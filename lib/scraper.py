@@ -26,8 +26,6 @@ class FeedScraper:
     def __init__(self, url):
         self.__base_url = url
 
-        # date_today for cvs name
-
         # url of chromedriver for docker build
         self.__service = Service('/usr/local/bin/chromedriver')
         # url of chromedriver for local testing
@@ -58,7 +56,7 @@ class FeedScraper:
     # The decorator is called befor the function is called
     # @wait
     def scrape(self):
-        logging.info("Start function")
+        logging.info("Start scrape func to get dom")
         self.__driver.get(self.__base_url)
         self.__driver.execute_script("""
             var buttons = document.querySelectorAll('button');

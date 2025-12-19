@@ -17,7 +17,7 @@ jc.start()
 
 try:
     while True:
-        logging.info("fincollect is running :)")
+        logging.info("Feedfusion is running :)")
         time.sleep(3600)
 except KeyboardInterrupt:
     logging.info("Program ending")

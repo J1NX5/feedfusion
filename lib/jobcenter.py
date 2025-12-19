@@ -24,21 +24,21 @@ class Jobcenter:
         # self.scheduler.add_job(self._start_scraper, 'interval', minutes=1)
         logging.info("Get feeds at programm start")
         self._get_feeds()
-        self.__scheduler.add_job(self._get_feeds, 'interval', minutes=10)
-        self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=15)
-        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=20)
+        self.__scheduler.add_job(self._get_feeds, 'interval', minutes=5)
+        self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=6)
+        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=7)
 
-    def start(self) -> None:
-        self.__scheduler.start()
-        return logging.info("Jobcenter hat geöffnet")
+    def start(self):
+        return self.__scheduler.start()
         
 
     def _get_feeds(self) -> None:
-        logging.info('Run _get_feeds() from jobcenter')
+        logging.info('Run _get_feeds()')
         fro = FeedReader()
         fro.fetch_rss_feed()
 
     def _scrape_feed_text(self):
+        logging.info("Run: _scrape_feed_text()")
         dmo = DBManager()
 
         # Get 10 of datasets without text and active
@@ -60,6 +60,7 @@ class Jobcenter:
         return logging.info("Success running: _scrape_feed_text()")
 
     def _scrape_dom_and_save_to_file(self):
+        logging.info("Run: _scrape_dom_and_save_to_file()")
         dmo = DBManager()
         fetch_data = dmo.get_urls_without_dom()
         for fd in fetch_data:
@@ -70,7 +71,7 @@ class Jobcenter:
             file_path = os.path.join(directory, f'{file_name}.txt')
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(dom_data)
-            dmo.update_dom_by_url(str(directory+file_name+".txt"),fd[4])
+            dmo.update_dom_by_url(str(directory+file_name+".txt"),fd[6])
 
 
 if __name__ == "__main__":
