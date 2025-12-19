@@ -69,7 +69,7 @@ class DBManager:
                     link,
                     published,
                     author,
-                    self.__date_today(),
+                    self.__date_today,
                     active
                 )
         ) 

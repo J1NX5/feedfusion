@@ -51,10 +51,10 @@ class Jobcenter:
             # fso = FeedScraper(d[4])
             try:
                 # html_text = fso.scrape()
-                feed_article = Article(d[4])
+                feed_article = Article(d[6])
                 feed_article.download()
                 feed_article.parse()
-                dmo.update_feed_text_by_url(feed_article.text, d[4])
+                dmo.update_feed_text_by_url(feed_article.text, d[6])
             except Exception as e:
                 logging.warning(f'Error: {e}')
         return logging.info("Success running: _scrape_feed_text()")
