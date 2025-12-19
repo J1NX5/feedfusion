@@ -6,7 +6,7 @@ from lib.database import DBManager
 # from database import DBManager
 import logging
 import yaml
-from datetime import datetime
+import calendar
 
 logging.basicConfig(
     level=logging.INFO,
@@ -53,7 +53,7 @@ class FeedReader:
                 '''
                 raw_feed = feedparser.parse(q['url'])
                 pre_data = pd.DataFrame(raw_feed.entries)
-                desired_cols = ['id', 'title', 'tags', 'link', 'published', 'author']
+                desired_cols = ['id', 'title', 'tags', 'link', 'published_parsed', 'author']
                 existing_cols = [c for c in desired_cols if c in pre_data.keys()]
                 fetch_data = pre_data[existing_cols]
                 for f in fetch_data.itertuples(index=False):
@@ -69,8 +69,8 @@ class FeedReader:
                     else:
                         author = None
 
-                    if hasattr(f, "published"):
-                        published = self._cast_datestring_to_unixtime(f.published)
+                    if hasattr(f, "published_parsed"):
+                        published = self._cast_datestring_to_unixtime(f.published_parsed)
                     else:
                         published = None
                     if resp is not None:
@@ -94,9 +94,8 @@ class FeedReader:
             tags_string = None
         return tags_string
     
-    def _cast_datestring_to_unixtime(self, date_string: str) -> int:
-        dt = datetime.strptime(date_string, "%a, %d %b %Y %H:%M:%S %z")
-        timestamp = int(dt.timestamp())
+    def _cast_datestring_to_unixtime(self, date_struct) -> int:
+        timestamp = calendar.timegm(date_struct)
         return timestamp
 
 if __name__ == '__main__':

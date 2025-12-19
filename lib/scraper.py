@@ -27,16 +27,16 @@ class FeedScraper:
         self.__base_url = url
 
         # url of chromedriver for docker build
-        self.__service = Service('/usr/local/bin/chromedriver')
+        # self.__service = Service('/usr/local/bin/chromedriver')
         # url of chromedriver for local testing
-        # self.__service = Service('/usr/bin/chromedriver')
+        self.__service = Service('/usr/bin/chromedriver')
 
         self.__chrome_options = Options()
 
         # url of browser for docker build
-        self.__chrome_options.binary_location = '/usr/bin/google-chrome'
+        # self.__chrome_options.binary_location = '/usr/bin/google-chrome'
         # url of browser for local testing
-        # self.__chrome_options.binary_location = '/usr/bin/chromium-browser'
+        self.__chrome_options.binary_location = '/usr/bin/chromium-browser'
 
         self.__chrome_options.add_argument("--headless=new")
         self.__chrome_options.add_argument("--no-sandbox")
