@@ -8,5 +8,5 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ~/feedfusion:/app/data
-      - ~/feedfusion/dom:/app/data/dom
+      - ~/ff_data:/app/data
+      - ~/ff_data/dom:/app/data/dom
