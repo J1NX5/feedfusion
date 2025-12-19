@@ -53,7 +53,6 @@ class FeedReader:
                 '''
                 raw_feed = feedparser.parse(q['url'])
                 pre_data = pd.DataFrame(raw_feed.entries)
-                print(pre_data)
                 desired_cols = ['id', 'title', 'tags', 'link', 'published', 'author']
                 existing_cols = [c for c in desired_cols if c in pre_data.keys()]
                 fetch_data = pre_data[existing_cols]
