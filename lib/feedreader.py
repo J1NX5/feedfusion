@@ -56,8 +56,6 @@ class FeedReader:
                 existing_cols = [c for c in desired_cols if c in pre_data.keys()]
                 fetch_data = pre_data[existing_cols]
                 for f in fetch_data.itertuples(index=False):
-                    if q['name'] == 'coindesk':
-                        print(f)
                     count_data[q['name']]['count_feeds'] += 1
                     resp = self.__dbm.check_entry_exist(f.id)
                     if hasattr(f, "tags"):
