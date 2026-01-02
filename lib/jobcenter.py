@@ -29,7 +29,7 @@ class Jobcenter:
         self.__gsdt = int(os.getenv("SCRAPEDOM", 20))
         self.__scheduler.add_job(self._get_feeds, 'interval', minutes=self.__gft)
         self.__scheduler.add_job(self._scrape_feed_text, 'interval', minutes=self.__gstt)
-        self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=self.__gsdt)
+        # self.__scheduler.add_job(self._scrape_dom_and_save_to_file, 'interval', minutes=self.__gsdt)
 
     def start(self):
         return self.__scheduler.start()
